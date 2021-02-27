@@ -12,7 +12,7 @@ version = '0.1'
 
 omegat {
     version = "5.2.0"
-    pluginClass = "org.omegat.filters2.text.dokuwiki.DokuWikiFilter"
+    pluginClass = "org.gmchinaforum.filter.text.gms2csv.Gms2CsvFilter"
 }
 
 dependencies {
