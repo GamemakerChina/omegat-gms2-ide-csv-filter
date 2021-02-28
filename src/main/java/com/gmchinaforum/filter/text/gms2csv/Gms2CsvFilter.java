@@ -66,19 +66,37 @@ public class Gms2CsvFilter extends AbstractFilter {
         while ((line = lbpr.readLine()) != null) {
             String trimmed = line.trim();
 
+            // skipping empty strings
+            if (trimmed.isEmpty()) {
+                outfile.write(line + lbpr.getLinebreak());
+                continue;
+            }
+
             String[] result = splitter.split(trimmed);
 
             String name = result[0];
             String english = result[1];
             String translation = result[2];
-            //String restrictions = result[3];
-            //String comments = result[4];
+
+            // Fix ArrayIndexOutOfBounds exception 
+            // If you use general usage, it will cause the array to go out of bounds, strange problems:
+            // String restrictions = result[3];
+            // String comments = result[4];
+            String restrictions = null;
+            String comments = null;
+            for(int j = 3; j < result.length - 1; j++) {
+                restrictions = result[j];
+            }
+            for(int j = 4; j < result.length; j++) {
+                comments = result[j];
+            }
 
             // writing out: name,english,translation,restrictions,comments
 
             String trans = process(english, translation);
 
-            outfile.write(name + "," + english + "," + trans);
+            outfile.write(name + "," + english + "," + trans + "," + restrictions + "," + comments);
+            //outfile.write(name + "," + english + "," + trans);
             outfile.write(lbpr.getLinebreak());
         }
         lbpr.close();
@@ -104,21 +122,21 @@ public class Gms2CsvFilter extends AbstractFilter {
 
     /**
      *
-     * @param key
-     * @param value
+     * @param english
+     * @param translation
      * @return
      */
-    private String process(String key, String value) {
+    private String process(String english, String translation) {
         if (entryParseCallback != null) {
-            entryParseCallback.addEntry(key, value, null, false, null, this);
-            return value;
+            entryParseCallback.addEntry(english, translation, null, false, null, this);
+            return translation;
         } else if (entryTranslateCallback != null) {
-            String trans = entryTranslateCallback.getTranslation(key, value);
-            return trans != null ? trans : value;
+            String trans = entryTranslateCallback.getTranslation(english, translation);
+            return trans != null ? trans : translation;
         } else if (entryAlignCallback != null) {
-            align.put(key, value);
+            align.put(english, translation);
         }
-        return value;
+        return translation;
     }
 
 }
