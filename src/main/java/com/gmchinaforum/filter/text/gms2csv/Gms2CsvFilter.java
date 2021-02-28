@@ -3,7 +3,6 @@ package com.gmchinaforum.filter.text.gms2csv;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
-import java.util.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -14,7 +13,6 @@ import org.omegat.filters2.FilterContext;
 import org.omegat.filters2.Instance;
 import org.omegat.util.LinebreakPreservingReader;
 import org.omegat.util.NullBufferedWriter;
-import org.omegat.util.OStrings;
 import org.omegat.util.StringUtil;
 
 /**
