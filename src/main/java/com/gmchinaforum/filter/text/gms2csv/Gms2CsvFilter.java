@@ -93,7 +93,7 @@ public class Gms2CsvFilter extends AbstractFilter {
 
             // writing out: name,english,translation,restrictions,comments
 
-            String trans = process(name, english, translation, comments);
+            String trans = process(name, translation, comments);
 
             outfile.write(name + "," + english + "," + trans + "," + restrictions + "," + comments);
             //outfile.write(name + "," + english + "," + trans);
@@ -122,17 +122,16 @@ public class Gms2CsvFilter extends AbstractFilter {
 
     /**
      * @param name
-     * @param english
      * @param translation
      * @param comments
      * @return
      */
-    private String process(String name, String english, String translation, String comments) {
+    private String process(String name, String translation, String comments) {
         if (entryParseCallback != null) {
-            entryParseCallback.addEntry(name, english, translation, false, comments, this);
+            entryParseCallback.addEntry(name, translation, null, false, comments, this);
             return translation;
         } else if (entryTranslateCallback != null) {
-            String trans = entryTranslateCallback.getTranslation(name, english, translation);
+            String trans = entryTranslateCallback.getTranslation(name, translation);
             return trans != null ? trans : translation;
         } else if (entryAlignCallback != null) {
             align.put(name, translation);
