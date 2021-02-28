@@ -24,7 +24,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **************************************************************************/
 
-package org.gmchinaforum.filters.text.dokuwiki;
+package com.gmchinaforum.filter.text.gms2filter;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -42,16 +42,16 @@ import org.omegat.util.OStrings;
 import org.omegat.util.StringUtil;
 
 /**
- * Filter to support Files for Magento CE locale. The files are a kind of CSV that looks like
- * "string in code","string to display in a locale"
+ * Filter to support Files for GameMaker Studio 2 Language locale.
+ * "Name","English","Translation","Restrictions","Comment"
  *
- * @author Michael Zakharov <trapman.hunt@gmail.com>
+ * @author GameMaker China Forum
  */
-public class MagentoFilter extends AbstractFilter {
+public class Gms2CsvFilter extends AbstractFilter {
     protected Map<String, String> align;
 
     public String getFileFormatName() {
-        return OStrings.getString("MAGENTOFILTER_FILTER_NAME");
+        return OStrings.getString("GameMaker Studio 2 Language CSV");
     }
 
     public boolean isSourceEncodingVariable() {
@@ -87,7 +87,7 @@ public class MagentoFilter extends AbstractFilter {
          * The pattern splits it like
          * "Use "",""" (key for translation) and ""","" will be used" (value for translation)
          */
-        Pattern splitter = Pattern.compile(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
+        //Pattern splitter = Pattern.compile(",(?=(?:[^\"]*\"[^\"]*\")*(?![^\"]*\"))");
 
         while ((line = lbpr.readLine()) != null) {
 
@@ -97,31 +97,31 @@ public class MagentoFilter extends AbstractFilter {
              * third","first, second, third"
              * It is unknown, if these lines are valid or not, so I inserted a quick workaround.
              */
-            String contLine;
-            // Continue reading until the line ends with ", or end of file
-            while (!line.endsWith("\"") && (contLine = lbpr.readLine()) != null) {
-                line += lbpr.getLinebreak() + contLine; // Preserve linebreaks
-            }
+            // String contLine;
+            // // Continue reading until the line ends with ", or end of file
+            // while (!line.endsWith("\"") && (contLine = lbpr.readLine()) != null) {
+            //     line += lbpr.getLinebreak() + contLine; // Preserve linebreaks
+            // }
 
             String trimmed = line.trim();
 
-            // skipping empty strings
-            if (trimmed.isEmpty()) {
-                outfile.write(line + lbpr.getLinebreak());
-                continue;
-            }
+            // // skipping empty strings
+            // if (trimmed.isEmpty()) {
+            //     outfile.write(line + lbpr.getLinebreak());
+            //     continue;
+            // }
 
-            String[] result = splitter.split(trimmed);
-            if (result.length < 2) { // Guard for malformed rows
-                outfile.write(line + lbpr.getLinebreak());
-                continue;
-            }
+            String[] result = line.split(trimmed);
+            // if (result.length == 2) { // Guard for malformed rows
+            //     outfile.write(line + lbpr.getLinebreak());
+            //     continue;
+            // }
             String key = result[0];
-            String value = result[1];
+            String value = result[2];
 
             // Remove ""
-            key = key.substring(1, key.length() - 1);
-            value = value.substring(1, value.length() - 1);
+            // key = key.substring(1, key.length() - 1);
+            // value = value.substring(1, value.length() - 1);
 
             // writing out: "string in the code","
             outfile.write("\"" + key + "\",\"");
