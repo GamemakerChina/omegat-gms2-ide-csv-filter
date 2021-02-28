@@ -51,6 +51,13 @@ import org.omegat.util.StringUtil;
 public class Gms2CsvFilter extends AbstractFilter {
     protected Map<String, String> align;
 
+    public static void loadPlugins() {
+        Core.registerFilterClass(Gms2CsvFilter.class);
+    }
+
+    public static void unloadPlugins() {
+    }
+
     public String getFileFormatName() {
         return OStrings.getString("GameMaker Studio 2 Language CSV");
     }
@@ -65,13 +72,6 @@ public class Gms2CsvFilter extends AbstractFilter {
 
     public Instance[] getDefaultInstances() {
         return new Instance[] { new Instance("*.csv", null, "UTF-8"), };
-    }
-
-    public static void loadPlugins() {
-        Core.registerFilterClass(Gms2CsvFilter.class);
-    }
-
-    public static void unloadPlugins() {
     }
 
     /**
