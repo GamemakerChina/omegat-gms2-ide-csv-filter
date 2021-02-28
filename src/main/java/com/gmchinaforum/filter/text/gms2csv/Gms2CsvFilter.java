@@ -24,7 +24,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **************************************************************************/
 
-package com.gmchinaforum.filter.text.gms2filter;
+package com.gmchinaforum.filter.text.gms2csv;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -33,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.omegat.core.Core;
 import org.omegat.filters2.AbstractFilter;
 import org.omegat.filters2.FilterContext;
 import org.omegat.filters2.Instance;
@@ -64,6 +65,13 @@ public class Gms2CsvFilter extends AbstractFilter {
 
     public Instance[] getDefaultInstances() {
         return new Instance[] { new Instance("*.csv", null, "UTF-8"), };
+    }
+
+    public static void loadPlugins() {
+        Core.registerFilterClass(Gms2CsvFilter.class);
+    }
+
+    public static void unloadPlugins() {
     }
 
     /**
