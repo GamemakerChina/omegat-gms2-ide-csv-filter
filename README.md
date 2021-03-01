@@ -1,6 +1,8 @@
 # gms2-ide-csv-filter
 Filter for GameMaker Studio 2 Language CSV files 
 
+[Screenshot(?)](https://twitter.com/LiarOnce_P/status/1365913954074066949)
+
 ## Install
 
 Go to [release](https://github.com/GamemakerChina/gms2-ide-csv-filter/releases) to download plugin.
